@@ -24,11 +24,12 @@ End-to-end NBA analytics system that:
 ---
 
 ## Project Structure
+```
 core/        # Django models and management commands
 src/         # Feature engineering and prediction scripts
 models/      # Saved ML model artifacts
 data/        # Raw and processed CSV datasets
-
+```
 ---
 
 ## 1) Clone the repo
@@ -68,8 +69,9 @@ Copy the example environment file:
 ```bash
 cp .env.example .env
 ```
-Populate .env with real values; .env.example structure:
 
+Populate .env with real values. Structure is as follows:
+```
 ODDS_API_KEY=ODDS_API_KEY
 DJANGO_SECRET_KEY=DJANGO_SECRET_KEY
 DB_NAME=DB_NAME
@@ -77,6 +79,7 @@ DB_USER=DB_USER
 DB_PASSWORD=DB_PASSWORD
 DB_HOST=DB_HOST
 DB_PORT=DB_PORT
+```
 
 ## 6) Create the PostgreSQL Database
 Using psql:
