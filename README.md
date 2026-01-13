@@ -24,18 +24,24 @@ End-to-end NBA analytics system that:
 ---
 
 ## Project Structure
-```
-core/        # Django models and management commands
-src/         # Feature engineering and prediction scripts
-models/      # Saved ML model artifacts
-data/        # Raw and processed CSV datasets
+```   
+nba-player-points-prediction/
+├── core/       # Django models and management commands
+├── src/        # Feature engineering and prediction scripts
+├── models/     # Saved ML model artifacts
+├── data/       # Raw and processed CSV datasets
+├── manage.py
+├── requirements.txt
+├── .env.example
+├── README.md
+└── .gitignore
 ```
 ---
 
 ## 1) Clone the repo
 ```bash
-git clone <YOUR_GITHUB_REPO_URL>
-cd <YOUR_REPO_FOLDER>
+git clone https://github.com/collin0613/nba-player-points-prediction
+cd nba-player-points-prediction
 ```
 
 ## 2) Create and Activate a Virtual Environment
@@ -111,8 +117,14 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-The server will be available at: http://127.0.0.1:8000/
-Admin panel: http://127.0.0.1:8000/admin
+The server will be available at: 
+```
+http://127.0.0.1:8000/
+```
+Admin panel: 
+```
+http://127.0.0.1:8000/admin
+```
 
 ## 9) Run Model Predictions
 A pretrained regression model is included at: models/ridge_points_model_2024-25.joblib
@@ -134,5 +146,5 @@ python manage.py compare_predictions_to_props \
 ```
 
 Flags:
---csv: path to the predictions CSV file
---bookmakers: sportsbook name to compare against
+- --csv: path to the predictions CSV file
+- --bookmakers: sportsbook name to compare against
