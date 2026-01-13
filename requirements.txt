@@ -1,0 +1,11 @@
+Django
+psycopg2-binary
+python-dotenv
+requests
+
+nba_api
+pandas
+numpy
+scikit-learn
+joblib
+matplotlib

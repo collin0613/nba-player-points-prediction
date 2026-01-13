@@ -1,0 +1,32 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Django
+*.sqlite3
+staticfiles/
+media/
+
+# Logs
+*.log
+
+# OS / Editor
+.DS_Store
+.vscode/
+
+# ML artifacts (keep specific ones explicitly)
+*.pkl
+
+# Prediction outputs / temp files
+predictions_*.csv
+
