@@ -1,150 +1,147 @@
-# NBA Player Points Prediction & Betting Line Analysis
+# NBA Player Points Prediction
 
-End-to-end NBA analytics system that:
-- trains/loads a scikit-learn regression model to predict player point totals
-- stores games + predictions + results in a Django/PostgreSQL backend
-- optionally compares model predictions to sportsbook player props (via Odds API)
+A machine learning project for predicting NBA player points, comparing forecasts
+with sportsbook props, and evaluating predictions against verified game results.
+Python and scikit-learn handle data preparation and inference; Django and PostgreSQL
+store players, games, predictions, sportsbook lines, and ingestion history. Results
+are available through management commands and the Django admin.
 
----
+The current pipeline targets the 2026–27 regular season. It selects players on
+current NBA rosters with at least 15 average minutes per appearance in the previous
+season. Features use prior-game scoring, minutes, shot attempts, team context, and
+opponent history. Predictions assume the player participates; no injury feed or
+provider-supplied minutes projections are integrated.
 
-## Tech Stack
-- Python, scikit-learn (model training/inference)
-- Django (API + persistence)
-- PostgreSQL (relational storage)
-- nba_api (players and league data)
-- Odds API (sportsbook lines / props)
+## Local setup
 
----
+Prerequisites: Git, Python, and a running PostgreSQL server. The local environment
+was tested with Python 3.14; `requirements-lock.txt` records its dependency versions.
+`requirements.txt` lists the direct dependencies.
 
-## Prerequisites
-- Python 3.10+ (3.11 recommended)
-- PostgreSQL 14+ (local install or Docker)
-- Git
-
----
-
-## Project Structure
-```   
-nba-player-points-prediction/
-├── core/       # Django models and management commands
-├── src/        # Feature engineering and prediction scripts
-├── models/     # Saved ML model artifacts
-├── data/       # Raw and processed CSV datasets
-├── manage.py
-├── requirements.txt
-├── .env.example
-├── README.md
-└── .gitignore
-```
----
-
-## 1) Clone the repo
 ```bash
-git clone https://github.com/collin0613/nba-player-points-prediction
+git clone https://github.com/collin0613/nba-player-points-prediction.git
 cd nba-player-points-prediction
-```
-
-## 2) Create and Activate a Virtual Environment
-macOS / Linux / WSL
-```bash
-python -m venv .venv
+python3.14 -m venv .venv
 source .venv/bin/activate
+python -m pip install -r requirements-lock.txt
 ```
 
-Windows (PowerShell)
-```bash
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
+For a new installation, create a PostgreSQL login and database using an account
+with permission to create them:
 
-## 3) Install Dependencies
 ```bash
-pip install -r requirements.txt
-```
-
-## 4) Obtain Required Keys
-Odds API Key: Create an account with the Odds API provider used in this project and generate an API key.
-
-Generate a Django secret key:
-```bash
-python -c "import secrets; print(secrets.token_urlsafe(50))"
-```
-
-## 5) Configure Environment Variables
-Copy the example environment file:
-```bash
+createuser --pwprompt nba_ml
+createdb --owner=nba_ml ml_sports
 cp .env.example .env
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 
-Populate .env with real values. Structure is as follows:
-```
-ODDS_API_KEY=ODDS_API_KEY
-DJANGO_SECRET_KEY=DJANGO_SECRET_KEY
-DB_NAME=DB_NAME
-DB_USER=DB_USER
-DB_PASSWORD=DB_PASSWORD
-DB_HOST=DB_HOST
-DB_PORT=DB_PORT
-```
+Edit `.env` with the generated `DJANGO_SECRET_KEY`, your PostgreSQL connection
+settings, and `SPORTSGAMEODDS_API_KEY`. NBA Stats does not require an API key.
+SportsGameOdds access is required for sportsbook ingestion and comparisons.
+Existing installations should retain their database and `.env`.
 
-## 6) Create the PostgreSQL Database
-Using psql:
 ```bash
-psql -U postgres
-```
-```sql
-CREATE USER nba_user WITH PASSWORD 'your_password';
-CREATE DATABASE nba_db OWNER nba_user;
-GRANT ALL PRIVILEGES ON DATABASE nba_db TO nba_user;
-\q
-```
-Ensure your .env database configuration matches the database you created.
-
-## 7) Initialize the Database Schema
-Run:
-```bash
-python manage.py makemigrations
 python manage.py migrate
-```
-
-Create an admin user:
-```bash
+python manage.py check
 python manage.py createsuperuser
 ```
 
-## 8) Start the Django Development Server
+## Build the dataset
+
+Run from the repository root with the virtual environment activated:
+
+```bash
+python src/fetch_population.py
+python src/population_features.py
+```
+
+The first command downloads league-wide player and team logs for 2023–24 through
+2025–26, fetches the current roster, and builds the eligible-player watchlist.
+Historical downloads are reused unless `--refresh` is supplied. The second command
+builds the original population training feature dataset at
+`data/processed/population/features.csv`, using information available before each
+historical game.
+
+The repository includes versioned population models and their JSON metadata.
+`models/active_population_2026-27.json` selects the current model for live dates;
+the original model is retained for earlier-date requests. Current-model inference
+uses the feature schema recorded in that model's metadata.
+
+To retrain and evaluate the **original population model**:
+
+```bash
+python src/evaluate_models.py
+```
+
+This compares candidates using chronological validation and overwrites the original
+population artifact and comparison reports. It does **not** retrain or activate the
+current role-feature model, and is not part of the daily prediction workflow.
+Model experiments and the legacy seven-player pipeline are described in the
+[repository guide](docs/repository_guide.md).
+
+## Daily prediction and evaluation pipeline
+
+```bash
+# Backfill verified final results for unresolved games in the lookback window.
+python manage.py update_actual_points --days 10
+
+# Evaluate yesterday's stored live predictions and eligible sportsbook lines.
+python manage.py evaluate_history --yesterday --stored-only --prediction-kind live --diff-threshold 3 --show-rows
+
+# Refresh NBA inputs, predict upcoming games, and store the forecasts.
+python src/predict.py --store
+
+# Refresh sportsbook lines and compare them with stored predictions.
+python manage.py compare_predictions_to_props
+```
+
+Prediction generation refreshes rosters, schedules, and current-season game logs.
+By default it predicts each eligible player's next scheduled game within 14 days.
+To restrict generation to today's New York game date, replace the prediction
+command with:
+
+```bash
+python src/predict.py --predict-date "$(TZ=America/New_York date +%F)" --store
+```
+
+Comparison defaults to today's New York date and refreshes odds itself; separate
+`fetch_events` and `fetch_odds` commands are available for ingestion troubleshooting.
+`--diff-threshold 3` filters evaluated prop comparisons by the absolute difference
+between prediction and line. That difference is not a calibrated win probability.
+
+Predictions are stored by default. Use `--no-store` for file export only, or
+`--offline --no-store` to reuse existing NBA snapshots without writing to PostgreSQL.
+Offline inference requires previously downloaded inputs. Use each command's `--help`
+for date filters and other options.
+
+## View results and retain history
+
 ```bash
 python manage.py runserver
 ```
 
-The server will be available at: 
-```
-http://127.0.0.1:8000/
-```
-Admin panel: 
-```
-http://127.0.0.1:8000/admin
-```
+Open <http://127.0.0.1:8000/admin/> and sign in with the admin account. The primary
+analysis pages show games, model predictions, and sportsbook lines.
 
-## 9) Run Model Predictions
-A pretrained regression model is included at: models/ridge_points_model_2024-25.joblib
+PostgreSQL retains the latest pregame prediction per player/game and locks it at
+tipoff. Unique run CSVs and metadata are saved under `data/predictions/`; root-level
+`predictions_*.csv` files are convenience exports. Preserve run files, source
+archives, and database backups locally. Recreating a past-date prediction does not
+recover the original forecast or establish live performance.
 
-Run the prediction script:
+Credentials, downloaded datasets, prediction exports, reports, and private archives
+are excluded from Git. Small test fixtures and the selected model artifacts are
+versioned. A fresh clone does not include your local database or forecast history.
+
+## Tests
+
 ```bash
-python src/predict.py
+python -m unittest discover -s tests -v
+python manage.py test core --settings=tracker.test_settings --noinput
 ```
 
-This loads the trained model pipeline and generates player point predictions using recent performance and matchup features.
-It also backfills actual_points scored in past predicted matchups with null values.
-
-## 10) Compare Predictions to Sportsbook Betting Lines
-With predictions exported to a CSV file in the root, compare model outputs to sportsbook props using the Django management command:
-```bash
-python manage.py compare_predictions_to_props \
-  --csv predictions_next_games_2025-26.csv \
-  --bookmakers DraftKings
-```
-
-Flags:
-- --csv: path to the predictions CSV file
-- --bookmakers: sportsbook name to compare against
+Tests use local fixtures and an isolated SQLite database; they do not require live
+API requests or modify the configured PostgreSQL database. The Django settings are
+for local development; cloud scheduling and production hosting require additional
+configuration.

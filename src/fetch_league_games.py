@@ -1,18 +1,13 @@
-import time
-import pandas as pd
-from nba_api.stats.endpoints import leaguegamelog
-
-SEASON = "2024-25"
-OUT = f"data/raw/league/gamelog_{SEASON}.csv"
+"""Download and validate completed regular-season team game logs."""
+from config import season_parser, league_path
+from data_io import fetch_league
 
 def main():
-    print(f"Fetching league game log for {SEASON}...")
-    time.sleep(1)
+    parser = season_parser(__doc__)
+    parser.add_argument('--refresh', action='store_true')
+    args = parser.parse_args()
+    df = fetch_league(args.season, refresh=args.refresh)
+    print(f'Saved {len(df)} team rows -> {league_path(args.season)}')
 
-    lg = leaguegamelog.LeagueGameLog(season=SEASON, season_type_all_star="Regular Season")
-    df = lg.get_data_frames()[0]
-    df.to_csv(OUT, index=False)
-    print(f"Saved {len(df)} rows -> {OUT}")
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

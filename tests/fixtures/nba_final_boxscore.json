@@ -1,0 +1,267 @@
+{
+  "boxScoreTraditional": {
+    "gameId": "0022500002",
+    "homeTeam": {
+      "teamId": 1610612747,
+      "teamTricode": "LAL",
+      "players": [
+        {
+          "personId": 1630559,
+          "firstName": "Austin",
+          "familyName": "Reaves",
+          "comment": "",
+          "statistics": {
+            "minutes": "36:20",
+            "points": 26
+          }
+        },
+        {
+          "personId": 1629060,
+          "firstName": "Rui",
+          "familyName": "Hachimura",
+          "comment": "",
+          "statistics": {
+            "minutes": "35:25",
+            "points": 9
+          }
+        },
+        {
+          "personId": 1629028,
+          "firstName": "Deandre",
+          "familyName": "Ayton",
+          "comment": "",
+          "statistics": {
+            "minutes": "33:53",
+            "points": 10
+          }
+        },
+        {
+          "personId": 1629216,
+          "firstName": "Gabe",
+          "familyName": "Vincent",
+          "comment": "",
+          "statistics": {
+            "minutes": "28:44",
+            "points": 3
+          }
+        },
+        {
+          "personId": 1629029,
+          "firstName": "Luka",
+          "familyName": "Don\u010di\u0107",
+          "comment": "",
+          "statistics": {
+            "minutes": "40:59",
+            "points": 43
+          }
+        },
+        {
+          "personId": 203935,
+          "firstName": "Marcus",
+          "familyName": "Smart",
+          "comment": "",
+          "statistics": {
+            "minutes": "22:46",
+            "points": 9
+          }
+        },
+        {
+          "personId": 1631222,
+          "firstName": "Jake",
+          "familyName": "LaRavia",
+          "comment": "",
+          "statistics": {
+            "minutes": "15:50",
+            "points": 5
+          }
+        },
+        {
+          "personId": 1629637,
+          "firstName": "Jaxson",
+          "familyName": "Hayes",
+          "comment": "",
+          "statistics": {
+            "minutes": "14:07",
+            "points": 4
+          }
+        },
+        {
+          "personId": 1629020,
+          "firstName": "Jarred",
+          "familyName": "Vanderbilt",
+          "comment": "",
+          "statistics": {
+            "minutes": "11:56",
+            "points": 0
+          }
+        },
+        {
+          "personId": 1642355,
+          "firstName": "Bronny",
+          "familyName": "James",
+          "comment": "DNP - Coach's Decision",
+          "statistics": {
+            "minutes": "",
+            "points": 0
+          }
+        },
+        {
+          "personId": 1642261,
+          "firstName": "Dalton",
+          "familyName": "Knecht",
+          "comment": "DNP - Coach's Decision",
+          "statistics": {
+            "minutes": "",
+            "points": 0
+          }
+        },
+        {
+          "personId": 1631132,
+          "firstName": "Christian",
+          "familyName": "Koloko",
+          "comment": "DNP - Coach's Decision",
+          "statistics": {
+            "minutes": "",
+            "points": 0
+          }
+        }
+      ]
+    },
+    "awayTeam": {
+      "teamId": 1610612744,
+      "teamTricode": "GSW",
+      "players": [
+        {
+          "personId": 202710,
+          "firstName": "Jimmy",
+          "familyName": "Butler III",
+          "comment": "",
+          "statistics": {
+            "minutes": "34:44",
+            "points": 31
+          }
+        },
+        {
+          "personId": 1630228,
+          "firstName": "Jonathan",
+          "familyName": "Kuminga",
+          "comment": "",
+          "statistics": {
+            "minutes": "32:54",
+            "points": 17
+          }
+        },
+        {
+          "personId": 203110,
+          "firstName": "Draymond",
+          "familyName": "Green",
+          "comment": "",
+          "statistics": {
+            "minutes": "28:24",
+            "points": 8
+          }
+        },
+        {
+          "personId": 1641764,
+          "firstName": "Brandin",
+          "familyName": "Podziemski",
+          "comment": "",
+          "statistics": {
+            "minutes": "32:32",
+            "points": 7
+          }
+        },
+        {
+          "personId": 201939,
+          "firstName": "Stephen",
+          "familyName": "Curry",
+          "comment": "",
+          "statistics": {
+            "minutes": "32:04",
+            "points": 23
+          }
+        },
+        {
+          "personId": 1627741,
+          "firstName": "Buddy",
+          "familyName": "Hield",
+          "comment": "",
+          "statistics": {
+            "minutes": "22:15",
+            "points": 17
+          }
+        },
+        {
+          "personId": 1627780,
+          "firstName": "Gary",
+          "familyName": "Payton II",
+          "comment": "",
+          "statistics": {
+            "minutes": "12:04",
+            "points": 6
+          }
+        },
+        {
+          "personId": 201143,
+          "firstName": "Al",
+          "familyName": "Horford",
+          "comment": "",
+          "statistics": {
+            "minutes": "20:15",
+            "points": 5
+          }
+        },
+        {
+          "personId": 1630611,
+          "firstName": "Gui",
+          "familyName": "Santos",
+          "comment": "",
+          "statistics": {
+            "minutes": "2:39",
+            "points": 0
+          }
+        },
+        {
+          "personId": 1642954,
+          "firstName": "Will",
+          "familyName": "Richard",
+          "comment": "",
+          "statistics": {
+            "minutes": "13:35",
+            "points": 5
+          }
+        },
+        {
+          "personId": 1642366,
+          "firstName": "Quinten",
+          "familyName": "Post",
+          "comment": "",
+          "statistics": {
+            "minutes": "8:34",
+            "points": 0
+          }
+        },
+        {
+          "personId": 1631218,
+          "firstName": "Trayce",
+          "familyName": "Jackson-Davis",
+          "comment": "DNP - Coach's Decision",
+          "statistics": {
+            "minutes": "",
+            "points": 0
+          }
+        },
+        {
+          "personId": 1630311,
+          "firstName": "Pat",
+          "familyName": "Spencer",
+          "comment": "DNP - Coach's Decision",
+          "statistics": {
+            "minutes": "",
+            "points": 0
+          }
+        }
+      ]
+    }
+  }
+}

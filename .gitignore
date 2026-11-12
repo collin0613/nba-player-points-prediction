@@ -1,5 +1,8 @@
 # Environment variables
 .env
+.env.*
+!.env.example
+NBA_ML_todo.txt
 
 # Python
 __pycache__/
@@ -24,9 +27,21 @@ media/
 .DS_Store
 .vscode/
 
-# ML artifacts (keep specific ones explicitly)
+# Model outputs: retain only the versions used by population model selection.
 *.pkl
+/models/*
+!/models/active_population_2026-27.json
+!/models/points_population_2026-27.joblib
+!/models/points_population_2026-27.json
+!/models/points_population_2026-27_role_v2_20261109.joblib
+!/models/points_population_2026-27_role_v2_20261109.json
 
 # Prediction outputs / temp files
 predictions_*.csv
 
+# Credential-free API response cache (not historical evaluation storage)
+.cache/
+
+# Downloaded inputs, generated features, run archives, and experiment outputs
+/data/
+/reports/

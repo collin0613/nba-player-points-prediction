@@ -1,0 +1,217 @@
+{
+  "selected_model": "boosted_mae",
+  "selection_metric": "pooled chronological validation MAE",
+  "validation_mae": {
+    "boosted_mae": 4.8463741163779535,
+    "elastic_net": 4.860685611688522,
+    "ridge_1000": 4.865827993876113,
+    "ridge_100": 4.869476713944072,
+    "boosted_mse": 4.888774235248176,
+    "random_forest": 4.890617617607457,
+    "minutes_rate": 4.903059604038611,
+    "season_blend": 4.956520661988806,
+    "ridge_original": 5.067622343073122,
+    "rolling5": 5.116716347662378,
+    "ridge_1": 5.21775527951364
+  },
+  "test_start": "2026-02-01",
+  "folds": [
+    {
+      "name": "winter_2024_25",
+      "start": "2025-01-01",
+      "end_exclusive": "2025-05-01"
+    },
+    {
+      "name": "opening_2025_26",
+      "start": "2025-10-01",
+      "end_exclusive": "2025-12-01"
+    },
+    {
+      "name": "winter_2025_26",
+      "start": "2025-12-01",
+      "end_exclusive": "2026-02-01"
+    }
+  ],
+  "model_version": "points_population_2026-27",
+  "fitted_rows": 42620,
+  "training_players": 513,
+  "data_through": "2026-04-12",
+  "features": [
+    "is_home",
+    "rest_days",
+    "days_since_appearance",
+    "season_games",
+    "prior_games",
+    "pts_avg_5",
+    "pts_avg_10",
+    "pts_avg_20",
+    "pts_ewm_5",
+    "pts_ewm_15",
+    "min_avg_5",
+    "min_avg_10",
+    "min_ewm_10",
+    "min_std_10",
+    "pts_std_10",
+    "prior_ppg",
+    "prior_mpg",
+    "pts_blend",
+    "min_blend",
+    "minutes_history_estimate",
+    "minutes_trend",
+    "fga_avg_10",
+    "fta_avg_10",
+    "fg3a_avg_10",
+    "pts_per_min_10",
+    "fga_per_min_10",
+    "fta_per_min_10",
+    "prior_pts_per_min",
+    "rate_points_baseline",
+    "changed_team",
+    "changed_team_since_prior",
+    "games_with_team",
+    "opp_allowed_10",
+    "opp_total_10",
+    "opp_possessions_10",
+    "opp_def_rating_10",
+    "team_possessions_10",
+    "player_key"
+  ],
+  "dataset_sha256": "34d9b2e2416083e4659e9081e95a2591336b3df7af4c37927ad1935920236bda",
+  "created_at": "2026-10-19T17:31:26.629932+00:00",
+  "python": "3.14.8",
+  "packages": {
+    "scikit-learn": "1.9.1",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4",
+    "joblib": "1.6.0"
+  },
+  "test_metrics": [
+    {
+      "model": "rolling5",
+      "selected_on_validation": false,
+      "mae": 5.119226879424654,
+      "rmse": 6.649420476502752,
+      "r2": 0.3766658900589872,
+      "bias": -0.10117990785481518,
+      "median_absolute_error": 4.199999999999999,
+      "within_5_points": 0.5946735588268345,
+      "rows": 8899
+    },
+    {
+      "model": "season_blend",
+      "selected_on_validation": false,
+      "mae": 5.066483097510501,
+      "rmse": 6.551882532540594,
+      "r2": 0.3948186931270765,
+      "bias": -0.39333720851853415,
+      "median_absolute_error": 4.170143415906129,
+      "within_5_points": 0.5834363411619283,
+      "rows": 8899
+    },
+    {
+      "model": "minutes_rate",
+      "selected_on_validation": false,
+      "mae": 4.97666707554405,
+      "rmse": 6.433690146578162,
+      "r2": 0.4164560350059212,
+      "bias": -0.3986732326458732,
+      "median_absolute_error": 4.111657801395866,
+      "within_5_points": 0.591864254410608,
+      "rows": 8899
+    },
+    {
+      "model": "ridge_original",
+      "selected_on_validation": false,
+      "mae": 4.935139051470813,
+      "rmse": 6.374939623715211,
+      "r2": 0.42706487034484364,
+      "bias": -0.29656026418663933,
+      "median_absolute_error": 4.0435653185687315,
+      "within_5_points": 0.5986065850095517,
+      "rows": 8899
+    },
+    {
+      "model": "ridge_1",
+      "selected_on_validation": false,
+      "mae": 4.89740383948333,
+      "rmse": 6.312089848244552,
+      "r2": 0.4383061817628494,
+      "bias": 0.05219301101054067,
+      "median_absolute_error": 4.0602814843417825,
+      "within_5_points": 0.5979323519496572,
+      "rows": 8899
+    },
+    {
+      "model": "ridge_100",
+      "selected_on_validation": false,
+      "mae": 4.855644317679333,
+      "rmse": 6.263962759205435,
+      "r2": 0.4468388967542284,
+      "bias": 0.052411891766823177,
+      "median_absolute_error": 4.01066945833716,
+      "within_5_points": 0.6026519833689179,
+      "rows": 8899
+    },
+    {
+      "model": "ridge_1000",
+      "selected_on_validation": false,
+      "mae": 4.860255753449862,
+      "rmse": 6.264429392984568,
+      "r2": 0.4467564782340493,
+      "bias": 0.03290554412334161,
+      "median_absolute_error": 3.9978774761663054,
+      "within_5_points": 0.601078772895831,
+      "rows": 8899
+    },
+    {
+      "model": "elastic_net",
+      "selected_on_validation": false,
+      "mae": 4.861126920389496,
+      "rmse": 6.26529029464655,
+      "r2": 0.4466044066039234,
+      "bias": 0.03374580904363816,
+      "median_absolute_error": 3.9988218070043846,
+      "within_5_points": 0.601078772895831,
+      "rows": 8899
+    },
+    {
+      "model": "random_forest",
+      "selected_on_validation": false,
+      "mae": 4.891468509007413,
+      "rmse": 6.312561771352938,
+      "r2": 0.43822218859790874,
+      "bias": 0.01039966605290744,
+      "median_absolute_error": 4.057384482100362,
+      "within_5_points": 0.6024272390156198,
+      "rows": 8899
+    },
+    {
+      "model": "boosted_mse",
+      "selected_on_validation": false,
+      "mae": 4.884649695462675,
+      "rmse": 6.295874555999227,
+      "r2": 0.44118837473115,
+      "bias": -0.013261103989799187,
+      "median_absolute_error": 4.04733225065973,
+      "within_5_points": 0.5999550511293403,
+      "rows": 8899
+    },
+    {
+      "model": "boosted_mae",
+      "selected_on_validation": true,
+      "mae": 4.858204558356854,
+      "rmse": 6.333313851529643,
+      "r2": 0.4345225113166694,
+      "bias": -0.6474164486287617,
+      "median_absolute_error": 3.915046459256196,
+      "within_5_points": 0.6109675244409484,
+      "rows": 8899
+    }
+  ],
+  "selected_minus_baseline_mae_95pct_date_bootstrap": [
+    -0.3001530435217497,
+    -0.22201532903878302
+  ],
+  "interpretation": "Negative MAE difference favors selected model. Selection frozen before test; final artifact refitted on all history.",
+  "minutes_source": "Historical estimate only; no provider projection or injury feed."
+}

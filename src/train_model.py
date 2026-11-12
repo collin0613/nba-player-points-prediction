@@ -1,134 +1,79 @@
-# src/train_model.py
-# Trains regression model to predict player points using processed features.
-#   Prints the results of model vs baseline for testing model accuracy, 
-#   allowing for different sets of metrics to be tested to find the strongest performing combination.
-
-import os
+"""Evaluate the existing Ridge design chronologically, then refit on all history."""
+import hashlib
+import platform
+from importlib.metadata import version
+import json
+from datetime import datetime, timezone
 import joblib
 import numpy as np
 import pandas as pd
-
-from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from config import NUM_FEATURES, CAT_FEATURES, season_parser, processed_dir, model_path
 
-SEASON_TAG = "2024-25" # update in the future; this was the last full NBA season at time of development
-DATA_PATH = f"data/processed/all_players_features_{SEASON_TAG}.csv"
-MODEL_DIR = "models"
-MODEL_PATH = f"{MODEL_DIR}/ridge_points_model_{SEASON_TAG}.joblib"
-
-# Numeric features
-NUM_FEATURES = [
-    "is_home",
-    "rest_days",
-    "pts_avg_5",
-    "pts_avg_10",
-    "min_avg_5",
-    "pts_allowed_avg_10",
-    "pace_proxy_avg_10",
-    "star_pts_allowed_avg_10",
-]
-
-# Removed features which did not help reduce mean absolute error in model performance:
-    #"min_avg_10",
-    #"fga_avg_5",
-    #"fta_avg_5",
-    #"usage_avg_5",
-
-CAT_FEATURES = ["player_name"]
-TARGET = "label_pts" # target variable to predict
-
-def chronological_split(df: pd.DataFrame, date_col: str = "GAME_DATE", train_frac: float = 0.8):
-    """
-    Splits by time: earlier dates are train, later dates are test.
-    """
+def chronological_split(df, date_col='GAME_DATE', train_frac=0.8):
     df = df.sort_values(date_col).reset_index(drop=True)
-    cutoff_idx = int(len(df) * train_frac)
-    cutoff_date = df.loc[cutoff_idx, date_col]
+    cutoff = df.loc[int(len(df) * train_frac), date_col]
+    train, test = df[df[date_col] <= cutoff].copy(), df[df[date_col] > cutoff].copy()
+    if len(train) < 20 or len(test) < 20:
+        raise ValueError('Insufficient rows for a date-separated evaluation (minimum 20 in each partition)')
+    return train, test
 
-    train_df = df[df[date_col] <= cutoff_date].copy()
-    test_df = df[df[date_col] > cutoff_date].copy()
+def make_pipeline():
+    prep = ColumnTransformer([
+        ('num', StandardScaler(), NUM_FEATURES),
+        ('cat', OneHotEncoder(handle_unknown='ignore'), CAT_FEATURES),
+    ])
+    return Pipeline([('prep', prep), ('model', Ridge(alpha=1.0, random_state=42))])
 
-    # If cutoff_date causes a very small test set (rare), fallback to index split
-    if len(test_df) < 20:
-        train_df = df.iloc[:cutoff_idx].copy()
-        test_df = df.iloc[cutoff_idx:].copy()
-
-    return train_df, test_df
-
+def train(season):
+    path = processed_dir(season) / 'all_players_features.csv'
+    df = pd.read_csv(path, parse_dates=['GAME_DATE'])
+    features = NUM_FEATURES + CAT_FEATURES
+    if df[features + ['label_pts']].isna().any().any():
+        raise ValueError('Missing model inputs')
+    train_df, test_df = chronological_split(df)
+    pipeline = make_pipeline()
+    pipeline.fit(train_df[features], train_df.label_pts)
+    predictions = pipeline.predict(test_df[features])
+    metrics = {
+        'baseline_mae': mean_absolute_error(test_df.label_pts, test_df.pts_avg_5),
+        'ridge_mae': mean_absolute_error(test_df.label_pts, predictions),
+        'ridge_rmse': float(np.sqrt(mean_squared_error(test_df.label_pts, predictions))),
+        'ridge_r2': r2_score(test_df.label_pts, predictions),
+        'train_rows': len(train_df), 'test_rows': len(test_df),
+        'train_through': str(train_df.GAME_DATE.max().date()),
+        'test_from': str(test_df.GAME_DATE.min().date()),
+    }
+    # Preserve honest holdout metrics before fitting the deployable model on all data.
+    evaluated = test_df[['GAME_DATE', 'player_name', 'label_pts', 'pts_avg_5']].copy()
+    evaluated['ridge_predicted_pts'] = predictions
+    evaluated.to_csv(processed_dir(season) / 'holdout_predictions.csv', index=False)
+    pipeline.fit(df[features], df.label_pts)
+    target = model_path(season)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump(pipeline, target)
+    metadata = {
+        'season': season, 'model_version': target.stem, 'features': features,
+        'python_version': platform.python_version(),
+        'packages': {name: version(name) for name in ['scikit-learn', 'pandas', 'numpy', 'joblib', 'nba_api']},
+        'fitted_rows': len(df), 'data_through': str(df.GAME_DATE.max().date()),
+        'dataset_sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+        'created_at': datetime.now(timezone.utc).isoformat(),
+        'evaluation': metrics,
+        'note': 'Holdout metrics precede final refit on all rows. Not an opening-night backtest.',
+    }
+    target.with_suffix('.json').write_text(json.dumps(metadata, indent=2) + '\n')
+    print(json.dumps(metadata, indent=2))
+    if metrics['ridge_mae'] >= metrics['baseline_mae']:
+        print('NOTE: Ridge did not beat the rolling-average baseline on this holdout.')
+    return metadata
 
 def main():
-    if not os.path.exists(DATA_PATH):
-        raise FileNotFoundError(
-            f"Could not find {DATA_PATH}. Run: python src/build_dataset.py"
-        )
+    train(season_parser(__doc__).parse_args().season)
 
-    df = pd.read_csv(DATA_PATH)
-    df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
-
-    needed = NUM_FEATURES + CAT_FEATURES + [TARGET, "GAME_DATE"]
-    missing = [c for c in needed if c not in df.columns]
-    if missing:
-        raise ValueError(
-            f"Dataset is missing columns: {missing}\n"
-            f"Loaded from: {DATA_PATH}\n"
-            f"Columns present: {list(df.columns)}\n"
-            f"Next steps: re-run process_data.py then build_dataset.py."
-        )
-
-    df = df.dropna(subset=NUM_FEATURES + CAT_FEATURES + [TARGET]).reset_index(drop=True)
-
-    train_df, test_df = chronological_split(df, train_frac=0.8)
-
-    X_train = train_df[NUM_FEATURES + CAT_FEATURES]
-    y_train = train_df[TARGET].astype(float)
-
-    X_test = test_df[NUM_FEATURES + CAT_FEATURES]
-    y_test = test_df[TARGET].astype(float)
-
-    # Baseline prediction: just use pts_avg_5, average points scored over last 5 games
-    # Goal is to beat the mean absolute error of this simple baseline
-    baseline_pred = X_test["pts_avg_5"].to_numpy()
-    baseline_mae = mean_absolute_error(y_test, baseline_pred)
-
-    # Preprocess:
-    # - scale numeric features (helps Ridge)
-    # - one-hot encode player_name
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", StandardScaler(), NUM_FEATURES),
-            ("cat", OneHotEncoder(handle_unknown="ignore"), CAT_FEATURES),
-        ]
-    )
-
-    # Ridge regression model used
-    model = Ridge(alpha=1.0, random_state=42)
-    pipeline = Pipeline(
-        steps=[
-            ("prep", preprocessor),
-            ("model", model),
-        ]
-    )
-
-    pipeline.fit(X_train, y_train)
-    preds = pipeline.predict(X_test)
-    mae = mean_absolute_error(y_test, preds)
-    rmse = np.sqrt(mean_squared_error(y_test, preds))
-    r2 = r2_score(y_test, preds)
-
-    print("=== Results ===")
-    print(f"Train rows: {len(train_df)} | Test rows: {len(test_df)}")
-    print(f"Baseline MAE (predict pts_avg_5): {baseline_mae:.3f}")
-    print(f"Model MAE (Ridge):               {mae:.3f}")
-    print(f"Model RMSE:                      {rmse:.3f}")
-    print(f"Model R^2:                       {r2:.3f}")
-
-    os.makedirs(MODEL_DIR, exist_ok=True)
-    joblib.dump(pipeline, MODEL_PATH)
-    print(f"Saved model -> {MODEL_PATH}")
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

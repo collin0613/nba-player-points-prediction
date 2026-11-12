@@ -1,0 +1,511 @@
+{
+  "fetched_at": "2026-10-19T22:41:40.755622+00:00",
+  "params": {
+    "bookmakerID": "draftkings,fanduel"
+  },
+  "response": {
+    "success": true,
+    "data": [
+      {
+        "eventID": "YcuJMzH3KxfKzxVKzSQs",
+        "sportID": "BASKETBALL",
+        "leagueID": "NBA",
+        "teams": {
+          "home": {
+            "teamID": "DETROIT_PISTONS_NBA",
+            "names": {
+              "long": "Detroit Pistons",
+              "medium": "Pistons",
+              "short": "DET",
+              "location": "Detroit"
+            },
+            "colors": {
+              "primary": "#006BB6",
+              "secondary": "#ED174C",
+              "primaryContrast": "#FFFFFF",
+              "secondaryContrast": "#000000"
+            },
+            "statEntityID": "home"
+          },
+          "away": {
+            "teamID": "BOSTON_CELTICS_NBA",
+            "names": {
+              "long": "Boston Celtics",
+              "medium": "Celtics",
+              "short": "BOS",
+              "location": "Boston"
+            },
+            "colors": {
+              "primary": "#008348",
+              "secondary": "",
+              "primaryContrast": "#FFFFFF",
+              "secondaryContrast": ""
+            },
+            "statEntityID": "away"
+          }
+        },
+        "status": {
+          "started": false,
+          "completed": false,
+          "cancelled": false,
+          "ended": false,
+          "live": false,
+          "delayed": false,
+          "currentPeriodID": "",
+          "previousPeriodID": "",
+          "displayShort": "",
+          "displayLong": "Upcoming",
+          "inBreak": false,
+          "startsAt": "2026-10-20T19:00:00.000Z",
+          "previousStartsAt": [],
+          "hardStart": true,
+          "periods": {
+            "started": [],
+            "ended": []
+          },
+          "oddsPresent": true,
+          "oddsAvailable": true,
+          "finalized": false
+        },
+        "players": {
+          "JAYSON_TATUM_1_NBA": {
+            "playerID": "JAYSON_TATUM_1_NBA",
+            "teamID": "BOSTON_CELTICS_NBA",
+            "firstName": "Jayson",
+            "lastName": "Tatum",
+            "name": "Jayson Tatum"
+          },
+          "CADE_CUNNINGHAM_1_NBA": {
+            "playerID": "CADE_CUNNINGHAM_1_NBA",
+            "teamID": "DETROIT_PISTONS_NBA",
+            "firstName": "Cade",
+            "lastName": "Cunningham",
+            "name": "Cade Cunningham"
+          },
+          "AUSAR_THOMPSON_1_NBA": {
+            "playerID": "AUSAR_THOMPSON_1_NBA",
+            "teamID": "DETROIT_PISTONS_NBA",
+            "firstName": "Ausar",
+            "lastName": "Thompson",
+            "name": "Ausar Thompson"
+          }
+        },
+        "odds": {
+          "points-JAYSON_TATUM_1_NBA-game-ou-over": {
+            "oddID": "points-JAYSON_TATUM_1_NBA-game-ou-over",
+            "opposingOddID": "points-JAYSON_TATUM_1_NBA-game-ou-under",
+            "statID": "points",
+            "statEntityID": "JAYSON_TATUM_1_NBA",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "over",
+            "playerID": "JAYSON_TATUM_1_NBA",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "+123",
+            "bookOdds": "-114",
+            "fairOverUnder": "27.5",
+            "bookOverUnder": "26.5",
+            "openFairOdds": "+100",
+            "openBookOdds": "-122",
+            "openFairOverUnder": "28",
+            "openBookOverUnder": "26.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "fanduel": {
+                "odds": "-114",
+                "overUnder": "26.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              },
+              "draftkings": {
+                "odds": "-104",
+                "overUnder": "27.5",
+                "lastUpdatedAt": "2026-10-19T21:52:29.336Z",
+                "available": false
+              }
+            },
+            "marketName": "Jayson Tatum Points Over/Under"
+          },
+          "points-JAYSON_TATUM_1_NBA-game-ou-under": {
+            "oddID": "points-JAYSON_TATUM_1_NBA-game-ou-under",
+            "opposingOddID": "points-JAYSON_TATUM_1_NBA-game-ou-over",
+            "statID": "points",
+            "statEntityID": "JAYSON_TATUM_1_NBA",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "under",
+            "playerID": "JAYSON_TATUM_1_NBA",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "-123",
+            "bookOdds": "-115",
+            "fairOverUnder": "27.5",
+            "bookOverUnder": "26.5",
+            "openFairOdds": "+100",
+            "openBookOdds": "-108",
+            "openFairOverUnder": "28",
+            "openBookOverUnder": "26.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "fanduel": {
+                "odds": "-114",
+                "overUnder": "26.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              },
+              "draftkings": {
+                "odds": "-122",
+                "overUnder": "27.5",
+                "lastUpdatedAt": "2026-10-19T21:52:29.336Z",
+                "available": false
+              }
+            },
+            "marketName": "Jayson Tatum Points Over/Under"
+          },
+          "points-CADE_CUNNINGHAM_1_NBA-game-ou-over": {
+            "oddID": "points-CADE_CUNNINGHAM_1_NBA-game-ou-over",
+            "opposingOddID": "points-CADE_CUNNINGHAM_1_NBA-game-ou-under",
+            "statID": "points",
+            "statEntityID": "CADE_CUNNINGHAM_1_NBA",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "over",
+            "playerID": "CADE_CUNNINGHAM_1_NBA",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "+106",
+            "bookOdds": "-105",
+            "fairOverUnder": "24.5",
+            "bookOverUnder": "24.5",
+            "openFairOdds": "+100",
+            "openBookOdds": "-122",
+            "openFairOverUnder": "26.5",
+            "openBookOverUnder": "24.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "fanduel": {
+                "odds": "-130",
+                "overUnder": "23.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              },
+              "draftkings": {
+                "odds": "-119",
+                "overUnder": "23.5",
+                "lastUpdatedAt": "2026-10-19T22:22:21.843Z",
+                "available": false
+              }
+            },
+            "marketName": "Cade Cunningham Points Over/Under"
+          },
+          "points-CADE_CUNNINGHAM_1_NBA-game-ou-under": {
+            "oddID": "points-CADE_CUNNINGHAM_1_NBA-game-ou-under",
+            "opposingOddID": "points-CADE_CUNNINGHAM_1_NBA-game-ou-over",
+            "statID": "points",
+            "statEntityID": "CADE_CUNNINGHAM_1_NBA",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "under",
+            "playerID": "CADE_CUNNINGHAM_1_NBA",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "-106",
+            "bookOdds": "-120",
+            "fairOverUnder": "24.5",
+            "bookOverUnder": "24.5",
+            "openFairOdds": "+100",
+            "openBookOdds": "-106",
+            "openFairOverUnder": "26.5",
+            "openBookOverUnder": "24.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "fanduel": {
+                "odds": "-102",
+                "overUnder": "23.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              },
+              "draftkings": {
+                "odds": "-107",
+                "overUnder": "23.5",
+                "lastUpdatedAt": "2026-10-19T22:22:21.843Z",
+                "available": false
+              }
+            },
+            "marketName": "Cade Cunningham Points Over/Under"
+          },
+          "points-AUSAR_THOMPSON_1_NBA-game-ou-over": {
+            "oddID": "points-AUSAR_THOMPSON_1_NBA-game-ou-over",
+            "opposingOddID": "points-AUSAR_THOMPSON_1_NBA-game-ou-under",
+            "statID": "points",
+            "statEntityID": "AUSAR_THOMPSON_1_NBA",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "over",
+            "playerID": "AUSAR_THOMPSON_1_NBA",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "+108",
+            "fairOverUnder": "10.5",
+            "openFairOdds": "+110",
+            "openFairOverUnder": "11.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "draftkings": {
+                "odds": "-102",
+                "overUnder": "10.5",
+                "lastUpdatedAt": "2026-10-19T22:35:56.932Z",
+                "available": true
+              },
+              "fanduel": {
+                "odds": "-102",
+                "overUnder": "10.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              }
+            },
+            "bookOdds": "-105",
+            "bookOverUnder": "10.5",
+            "marketName": "Ausar Thompson Points Over/Under",
+            "openBookOdds": "+100",
+            "openBookOverUnder": "9.5"
+          },
+          "points-AUSAR_THOMPSON_1_NBA-game-ou-under": {
+            "oddID": "points-AUSAR_THOMPSON_1_NBA-game-ou-under",
+            "opposingOddID": "points-AUSAR_THOMPSON_1_NBA-game-ou-over",
+            "statID": "points",
+            "statEntityID": "AUSAR_THOMPSON_1_NBA",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "under",
+            "playerID": "AUSAR_THOMPSON_1_NBA",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "-108",
+            "fairOverUnder": "10.5",
+            "openFairOdds": "-110",
+            "openFairOverUnder": "11.5",
+            "scoringSupported": true,
+            "bookOdds": "-125",
+            "bookOverUnder": "10.5",
+            "byBookmaker": {
+              "draftkings": {
+                "odds": "-124",
+                "overUnder": "10.5",
+                "lastUpdatedAt": "2026-10-19T22:35:56.932Z",
+                "available": true
+              },
+              "fanduel": {
+                "odds": "-130",
+                "overUnder": "10.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              }
+            },
+            "marketName": "Ausar Thompson Points Over/Under",
+            "openBookOdds": "+100",
+            "openBookOverUnder": "9.5"
+          },
+          "points-all-game-ou-over": {
+            "oddID": "points-all-game-ou-over",
+            "opposingOddID": "points-all-game-ou-under",
+            "marketName": "Over/Under",
+            "statID": "points",
+            "statEntityID": "all",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "over",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "+100",
+            "bookOdds": "-115",
+            "fairOverUnder": "222",
+            "bookOverUnder": "221.5",
+            "openFairOdds": "+100",
+            "openBookOdds": "-110",
+            "openFairOverUnder": "223",
+            "openBookOverUnder": "222.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "draftkings": {
+                "odds": "-105",
+                "overUnder": "222.5",
+                "lastUpdatedAt": "2026-10-19T22:35:56.932Z",
+                "available": true
+              },
+              "fanduel": {
+                "odds": "-104",
+                "overUnder": "222.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              }
+            }
+          },
+          "points-all-game-ou-under": {
+            "oddID": "points-all-game-ou-under",
+            "opposingOddID": "points-all-game-ou-over",
+            "marketName": "Over/Under",
+            "statID": "points",
+            "statEntityID": "all",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "under",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "+100",
+            "bookOdds": "-108",
+            "fairOverUnder": "222",
+            "bookOverUnder": "221.5",
+            "openFairOdds": "+100",
+            "openBookOdds": "-110",
+            "openFairOverUnder": "223",
+            "openBookOverUnder": "222.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "draftkings": {
+                "odds": "-115",
+                "overUnder": "222.5",
+                "lastUpdatedAt": "2026-10-19T22:35:56.932Z",
+                "available": true
+              },
+              "fanduel": {
+                "odds": "-118",
+                "overUnder": "222.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              }
+            }
+          },
+          "points-all-reg-ml3way-draw": {
+            "oddID": "points-all-reg-ml3way-draw",
+            "opposingOddID": "points-all-reg-ml3way-not_draw",
+            "marketName": "Regulation 3-Way Moneyline",
+            "statID": "points",
+            "statEntityID": "all",
+            "periodID": "reg",
+            "betTypeID": "ml3way",
+            "sideID": "draw",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": false,
+            "bookOdds": "+1250",
+            "openBookOdds": "+1100",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "draftkings": {
+                "odds": "+1500",
+                "lastUpdatedAt": "2026-10-19T22:36:33.407Z",
+                "available": true
+              }
+            }
+          },
+          "assists-JAYSON_TATUM_1_NBA-game-ou-over": {
+            "oddID": "assists-JAYSON_TATUM_1_NBA-game-ou-over",
+            "opposingOddID": "assists-JAYSON_TATUM_1_NBA-game-ou-under",
+            "statID": "assists",
+            "statEntityID": "JAYSON_TATUM_1_NBA",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "over",
+            "playerID": "JAYSON_TATUM_1_NBA",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "+100",
+            "bookOdds": "-134",
+            "fairOverUnder": "6",
+            "bookOverUnder": "5.5",
+            "openFairOdds": "-112",
+            "openBookOdds": "-130",
+            "openFairOverUnder": "5.5",
+            "openBookOverUnder": "5.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "fanduel": {
+                "odds": "-122",
+                "overUnder": "5.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              },
+              "draftkings": {
+                "odds": "-139",
+                "overUnder": "5.5",
+                "lastUpdatedAt": "2026-10-19T22:35:56.932Z",
+                "available": true
+              }
+            },
+            "marketName": "Jayson Tatum Assists Over/Under"
+          },
+          "assists-JAYSON_TATUM_1_NBA-game-ou-under": {
+            "oddID": "assists-JAYSON_TATUM_1_NBA-game-ou-under",
+            "opposingOddID": "assists-JAYSON_TATUM_1_NBA-game-ou-over",
+            "statID": "assists",
+            "statEntityID": "JAYSON_TATUM_1_NBA",
+            "periodID": "game",
+            "betTypeID": "ou",
+            "sideID": "under",
+            "playerID": "JAYSON_TATUM_1_NBA",
+            "started": false,
+            "ended": false,
+            "cancelled": false,
+            "bookOddsAvailable": true,
+            "fairOddsAvailable": true,
+            "fairOdds": "+100",
+            "bookOdds": "+105",
+            "fairOverUnder": "6",
+            "bookOverUnder": "5.5",
+            "openFairOdds": "+112",
+            "openBookOdds": "-102",
+            "openFairOverUnder": "5.5",
+            "openBookOverUnder": "5.5",
+            "scoringSupported": true,
+            "byBookmaker": {
+              "fanduel": {
+                "odds": "-108",
+                "overUnder": "5.5",
+                "lastUpdatedAt": "2026-10-19T22:36:31.012Z",
+                "available": true
+              },
+              "draftkings": {
+                "odds": "+107",
+                "overUnder": "5.5",
+                "lastUpdatedAt": "2026-10-19T22:35:56.932Z",
+                "available": true
+              }
+            },
+            "marketName": "Jayson Tatum Assists Over/Under"
+          }
+        }
+      }
+    ]
+  }
+}

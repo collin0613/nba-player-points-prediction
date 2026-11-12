@@ -1,0 +1,17 @@
+{
+  "boxScoreSummary": {
+    "gameId": "0022500002",
+    "gameStatus": 3,
+    "gameTimeUTC": "2025-10-22T02:00:00Z",
+    "homeTeam": {
+      "teamId": 1610612747,
+      "teamTricode": "LAL",
+      "score": 109
+    },
+    "awayTeam": {
+      "teamId": 1610612744,
+      "teamTricode": "GSW",
+      "score": 119
+    }
+  }
+}
