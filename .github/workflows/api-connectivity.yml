@@ -1,0 +1,31 @@
+name: API connectivity check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nba-api-connectivity
+  cancel-in-progress: false
+
+jobs:
+  connectivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install connectivity dependencies
+        run: python -m pip install -r requirements-connectivity.txt
+      - name: Test NBA and SportsGameOdds
+        env:
+          SPORTSGAMEODDS_API_KEY: ${{ secrets.SPORTSGAMEODDS_API_KEY }}
+        run: python scripts/check_cloud_apis.py

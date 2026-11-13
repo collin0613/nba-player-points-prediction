@@ -1,0 +1,2 @@
+# Only the standalone API probe; not the model or Django runtime.
+requests==2.34.2
