@@ -1,7 +1,7 @@
 """Manual cloud connectivity probe. No DB, model, payload storage, or retries.
 
-Uses the same endpoints as src/data_io.py and src/odds_api.py but deliberately
-avoids their project dependencies for the initial GitHub-hosted runner test.
+Uses the NBA client used by src/data_io.py and the SportsGameOdds endpoint
+used by src/odds_api.py, without importing Django or model code.
 One NBA request and, when a key is configured, one SportsGameOdds page per run.
 """
 import os
@@ -12,6 +12,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
+from nba_api.stats.endpoints import leaguegamelog
 
 
 def get_json(url, *, params, headers):
@@ -23,16 +24,14 @@ def get_json(url, *, params, headers):
 
 
 def check_nba():
-    payload = get_json(
-        "https://stats.nba.com/stats/leaguegamelog",
-        params={"Counter": 0, "Direction": "DESC", "LeagueID": "00",
-                "PlayerOrTeam": "T", "Season": "2026-27",
-                "SeasonType": "Regular Season", "Sorter": "DATE",
-                "DateFrom": "", "DateTo": ""},
-        headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
-                 "Accept": "application/json, text/plain, */*",
-                 "Referer": "https://www.nba.com/"},
-    )
+    # Match the application's client defaults, including headers and query ordering.
+    # A hand-built requests call is not an equivalent cloud connectivity test.
+    payload = leaguegamelog.LeagueGameLog(
+        season="2026-27",
+        season_type_all_star="Regular Season",
+        player_or_team_abbreviation="T",
+        timeout=30,
+    ).get_dict()
     result = next(item for item in payload["resultSets"]
                   if item["name"] == "LeagueGameLog")
     headers, rows = result["headers"], result["rowSet"]
